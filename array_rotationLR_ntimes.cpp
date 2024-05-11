@@ -52,8 +52,7 @@ int main(){
 
     switch (choice)
     {
-    case 'L':
-            case 'l':
+    case 'l':
                 rotateLeftNtimes(arr, rotate);
                 cout << "Left rotation: ";
                 for (int i = 0; i < n; i++) {
@@ -61,7 +60,7 @@ int main(){
                 }
                 cout << endl;
                 break;
-            case 'R':
+    case 'r':
                 rotateRightNtimes(arr, rotate);
                 cout << "Right rotation: ";
                 for (int i = 0; i < n; i++) {

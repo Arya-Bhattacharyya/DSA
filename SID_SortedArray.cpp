@@ -3,44 +3,56 @@
 
 using namespace std;
 
-//Search
-int findElement(vector<int>& arr, int value){
-    for(int i=0;i<arr.size();i++){
-        if(arr[i]==value){
-            return i;
-        }
+// Binary Search
+int binarySearch(const vector<int>& arr, int value) {
+    int left = 0;
+    int right = arr.size() - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (arr[mid] == value)
+            return mid;
+        else if (arr[mid] < value)
+            left = mid + 1;
         else
-            return -1;
+            right = mid - 1;
+    }
+
+    return -1;
+}
+
+// Insertion in Sorted Order
+void insertElement(vector<int>& arr, int value) {
+    int i = 0;
+    while (i < arr.size() && arr[i] < value) {
+        i++;
+    }
+    arr.insert(arr.begin() + i, value);
+}
+
+// Deletion of Element
+void deleteElement(vector<int>& arr, int value) {
+    int index = binarySearch(arr, value);
+    if (index != -1) {
+        arr.erase(arr.begin() + index);
+        cout << "Element " << value << " is deleted";
+    } else {
+        cout << "Element not found";
     }
 }
 
-void insertElement(vector<int>& arr, int value, int position){
-    if(position<0 || position>arr.size()){
-        return;
-    }
-    arr.insert(arr.begin()+position,value);
-}
-
-void deleteElement(vector<int>& arr, int value){
-    int index=findElement(arr,value);
-    if(value!=-1){
-        arr.erase(arr.begin()+index);
-        cout<< "Element "<< value<< " is deleted";
-    }else{
-        cout<<"Element not found";
-    }
-
-}
-
-int main(){
+int main() {
     int n;
-    cout<<"Enter size: ";
-    cin>>n;
+    cout << "Enter size: ";
+    cin >> n;
 
     vector<int> arr(n);
-    for(int i=0;i<n;i++){
-        cin>> arr[i];
+    cout << "Enter sorted elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
     }
+
     int choice;
     do {
         cout << "Enter your choice: ";
@@ -51,7 +63,7 @@ int main(){
                 int target;
                 cout << "Enter the element to search: ";
                 cin >> target;
-                int index = findElement(arr, target);
+                int index = binarySearch(arr, target);
                 if (index != -1) {
                     cout << "Element found at index: " << index << endl;
                 } else {
@@ -60,13 +72,11 @@ int main(){
                 break;
             }
             case 2: {
-                int element, position;
+                int element;
                 cout << "Enter the element to insert: ";
                 cin >> element;
-                cout << "Enter the position to insert (0-" << arr.size() << "): ";
-                cin >> position;
-                insertElement(arr, element, position);
-                cout << "Element " << element << " inserted at position " << position << endl;
+                insertElement(arr, element);
+                cout << "Element " << element << " inserted in sorted order." << endl;
                 break;
             }
             case 3: {
@@ -74,6 +84,7 @@ int main(){
                 cout << "Enter the element to delete: ";
                 cin >> element;
                 deleteElement(arr, element);
+                cout << endl;
                 break;
             }
             case 4:
@@ -84,4 +95,5 @@ int main(){
         }
     } while (choice != 4);
 
+    return 0;
 }
